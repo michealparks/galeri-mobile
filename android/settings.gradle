@@ -1,0 +1,3 @@
+rootProject.name = 'GaleriReactNative'
+
+include ':app'
