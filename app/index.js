@@ -9,7 +9,7 @@ export default class App extends PureComponent {
     super(props)
 
     this.state = {
-      uri: null,
+      uri: undefined,
       intervalTime: 1000 * 10
     }
 

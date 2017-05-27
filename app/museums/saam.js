@@ -19,7 +19,7 @@ function getNextArtwork (category, next) {
   if (artwork === undefined) {
     callbackRef = next
   } else {
-    next(null, artwork)
+    next(undefined, artwork)
     callbackRef = undefined
   }
 

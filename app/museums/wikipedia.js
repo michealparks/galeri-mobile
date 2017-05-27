@@ -23,7 +23,7 @@ function getNextArtwork (category, next) {
     artwork.img = artwork.img.replace(
       pixelRegex,
       `${Math.floor(screenWidth() + 500)}px`)
-    next(null, artwork)
+    next(undefined, artwork)
     callbackRef = undefined
   }
 
