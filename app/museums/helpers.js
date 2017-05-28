@@ -3,11 +3,13 @@ import shuffle from '../util/shuffle'
 
 export {restoreData, getCollection, getNextPages}
 
-const museumData = (async function () {
-  const configVersion = '0.0.1'
-  const config = await storage('museums') || {}
-  return config.version === configVersion ? config : {}
-})()
+// const museumData = (async function () {
+//   const configVersion = '0.0.1'
+//   const config = await storage('museums') || {}
+//   return config.version === configVersion ? config : {}
+// })()
+
+const museumData = {}
 
 function restoreData (types, artworks, nextPages, page, max) {
   for (let i = 0, l = types.length; i < l; ++i) {
@@ -28,9 +30,10 @@ function restoreData (types, artworks, nextPages, page, max) {
 
 function getCollection (next, url, category, responseType) {
   const xhr = new XMLHttpRequest()
-  const errHandler = onError.bind(xhr, next)
+  const errHandler = onError.bind(xhr, next, category)
 
-  xhr.open('GET', url, true)
+  xhr.open('GET', url)
+  xhr.setRequestHeader('Accept', 'application/json')
   xhr.responseType = responseType || 'json'
   xhr.timeout = 10000
   xhr.onload = onLoad.bind(xhr, next, category)
@@ -53,12 +56,12 @@ function getNextPages (currentPage, totalPages, startPage) {
 
 function onLoad (next, category) {
   if (this.status !== 200) {
-    return next(1)
+    return next(this.status, this.response, category)
   }
 
   next(undefined, this.response, category)
 }
 
-function onError (next, e) {
-  next(1)
+function onError (next, category, err) {
+  next(err, this.response, category)
 }

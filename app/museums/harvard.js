@@ -44,12 +44,11 @@ function getConfig (category) {
 
 function onGetCollection (err, response, category) {
   if (err !== undefined) {
-    if (callbackRef) {
+    if (callbackRef !== undefined) {
       callbackRef(err)
       callbackRef = undefined
     }
-
-    return console.warn(err)
+    return
   }
 
   for (let art, i = 0, r = response.records || [], l = r.length; i < l; ++i) {

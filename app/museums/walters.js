@@ -38,12 +38,11 @@ function getConfig (category) {
 
 function onGetCollection (err, response, category) {
   if (err !== undefined) {
-    if (callbackRef) {
+    if (callbackRef !== undefined) {
       callbackRef(err)
       callbackRef = undefined
     }
-
-    return console.warn(err)
+    return
   }
 
   for (let art, i = 0, r = response.Items || [], l = r.length; i < l; ++i) {
@@ -55,7 +54,7 @@ function onGetCollection (err, response, category) {
     artworks[category].push({
       source: 'The Walters Art Museum',
       href: art.ResourceURL,
-      img: `${art.PrimaryImage.Raw}?quality=100&format=jpg`,
+      img: `${art.PrimaryImage.Raw}?format=jpg&quality=100`,
       naturalWidth: 0,
       naturalHeight: 0,
       title: art.Title,
@@ -63,7 +62,7 @@ function onGetCollection (err, response, category) {
     })
   }
 
-  shuffle(artworks[category])
+  shuffle(artworks[category][0])
 
   if (response.NextPage) {
     page[category] += 1

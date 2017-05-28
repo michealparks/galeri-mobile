@@ -21,12 +21,14 @@ restoreData([
 function getNextArtwork (category, next) {
   let artwork
 
-  if (artworks[category].length > 0) {
-    do {
-      if (artworks[category].length === 0) break
-      artwork = artworks[category].pop()
-    } while (artwork.naturalWidth < screenWidth() ||
-             artwork.naturalHeight < screenHeight())
+  while (artworks[category].length > 0) {
+    const pending = artworks[category].pop()
+
+    if (pending.naturalWidth >= screenWidth() &&
+        pending.naturalHeight >= screenHeight()) {
+      artwork = pending
+      break
+    }
   }
 
   if (artwork === undefined) {
@@ -55,8 +57,7 @@ function onGetCollection (err, response, category) {
       callbackRef(err)
       callbackRef = undefined
     }
-
-    return console.warn(err)
+    return
   }
 
   for (let art, i = 0, r = response.artObjects || [], l = r.length; i < l; ++i) {

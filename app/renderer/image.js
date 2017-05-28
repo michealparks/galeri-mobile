@@ -6,11 +6,12 @@ export default class ImageView extends PureComponent {
     super(props)
 
     this.state = {
-      fadeAnim: new Animated.Value(this.props.isVisible ? 1 : 0)
+      opacity: new Animated.Value(
+        this.props.isVisible ? 1 : 0)
     }
 
     this.style = {
-      opacity: this.state.fadeAnim,
+      opacity: this.state.opacity,
       position: 'absolute',
       top: 0,
       left: 0,
@@ -28,7 +29,7 @@ export default class ImageView extends PureComponent {
   }
 
   animate (toValue) {
-    Animated.timing(this.state.fadeAnim, {
+    Animated.timing(this.state.opacity, {
       toValue: toValue,
       duration: this.props.animSpeed || 2000
     }).start()
@@ -39,7 +40,7 @@ export default class ImageView extends PureComponent {
       return null
     }
 
-    this.style.opacity = this.state.fadeAnim
+    this.style.opacity = this.state.opacity
 
     return <Animated.Image
       resizeMode='cover'

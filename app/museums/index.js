@@ -10,12 +10,11 @@ import storage from '../util/storage'
 
 export default getNextArtwork
 
-AppState.addEventListener('change', (nextAppState) => {
-  if (/inactive|background/.test(nextAppState)) saveConfig()
-})
+AppState.addEventListener('change', (nextAppState) =>
+  /inactive|background/.test(nextAppState) && saveConfig())
 
 function getNextArtwork (next) {
-  if (Math.floor(Math.random() * 8) === 0) {
+  if (Math.floor(Math.random() * 14) === 0) {
     return getNextRareImage(next)
   }
 

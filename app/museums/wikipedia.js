@@ -20,9 +20,8 @@ function getNextArtwork (category, next) {
   if (artwork === undefined) {
     callbackRef = next
   } else {
-    artwork.img = artwork.img.replace(
-      pixelRegex,
-      `${Math.floor(screenWidth() + 500)}px`)
+    const size = `${Math.floor(screenWidth() + 500)}px`
+    artwork.img = artwork.img.replace(pixelRegex, size)
     next(undefined, artwork)
     callbackRef = undefined
   }
